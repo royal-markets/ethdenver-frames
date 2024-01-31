@@ -5,8 +5,7 @@ import {
 } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import QRCode from 'qrcode'
-
+import QRCode from "qrcode";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";
@@ -20,11 +19,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
       });
       if (accountAddress) {
-        filePath = path.join('/Users/evan/Projects/ethdenver-frames', 'public', 'qrcodes', `accountAddress-${accountAddress}.png`);
+        filePath = path.join(
+          process.cwd(),
+          "qrcodes",
+          `accountAddress-${accountAddress}.png`,
+        );
         await QRCode.toFile(filePath, accountAddress);
         console.log(`filePath: ${filePath}`);
       }
-
     } catch (err) {
       console.error(err);
     }
@@ -32,9 +34,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content=https://f39c-136-49-112-158.ngrok-free.app/qrcodes/accountAddress-${accountAddress}.png />
+    <meta property="fc:frame:image" content=https://ethdenver-frames-cugiftq8u-royalio.vercel.app/qrcodes/accountAddress-${accountAddress}.png />
     <meta property="fc:frame:button:1" content="${accountAddress}" />
-    <meta property="fc:frame:post_url" content="https://f39c-136-49-112-158.ngrok-free.app/api/frame" />
+    <meta property="fc:frame:post_url" content="https://ethdenver-frames-cugiftq8u-royalio.vercel.app/api/frame" />
   </head></html>`);
 }
 
