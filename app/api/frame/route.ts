@@ -4,9 +4,13 @@ import {
   getFrameMessage,
 } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import QRCode from 'qrcode'
+
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";
+  let filePath: string | undefined = "";
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body);
 
@@ -15,6 +19,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       accountAddress = await getFrameAccountAddress(message, {
         NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
       });
+      if (accountAddress) {
+        filePath = path.join('/Users/evan/Projects/ethdenver-frames', 'public', 'qrcodes', `accountAddress-${accountAddress}.png`);
+        await QRCode.toFile(filePath, accountAddress);
+        console.log(`filePath: ${filePath}`);
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -22,9 +32,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="https://6a20-136-49-112-158.ngrok-free.app/waves2.jpeg" />
+    <meta property="fc:frame:image" content=https://f39c-136-49-112-158.ngrok-free.app/qrcodes/accountAddress-${accountAddress}.png />
     <meta property="fc:frame:button:1" content="${accountAddress}" />
-    <meta property="fc:frame:post_url" content="https://6a20-136-49-112-158.ngrok-free.app/api/frame" />
+    <meta property="fc:frame:post_url" content="https://f39c-136-49-112-158.ngrok-free.app/api/frame" />
   </head></html>`);
 }
 

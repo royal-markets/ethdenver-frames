@@ -7,8 +7,8 @@ const frameMetadata = getFrameMetadata({
       label: 'Claim NFT',
     },
   ],
-  image: 'https://6a20-136-49-112-158.ngrok-free.app/waves.jpeg',
-  post_url: 'https://6a20-136-49-112-158.ngrok-free.app/api/frame',
+  image: 'https://f39c-136-49-112-158.ngrok-free.app/waves.jpeg',
+  post_url: 'https://f39c-136-49-112-158.ngrok-free.app/api/frame',
 });
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Royal IRL - ETH Denver 2024',
     description: 'Royal IRL - ETH Denver 2024',
-    images: ['https://6a20-136-49-112-158.ngrok-free.app/waves.jpeg'],
+    images: ['https://f39c-136-49-112-158.ngrok-free.app/waves.jpeg'],
   },
   other: {
     ...frameMetadata,
