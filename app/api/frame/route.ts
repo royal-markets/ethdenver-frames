@@ -22,8 +22,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
+    <meta property="fc:frame:image" content="https://6a20-136-49-112-158.ngrok-free.app/waves2.jpeg" />
     <meta property="fc:frame:button:1" content="${accountAddress}" />
-    <meta property="fc:frame:post_url" content="https://localhost:3000/api/frame" />
+    <meta property="fc:frame:post_url" content="https://6a20-136-49-112-158.ngrok-free.app/api/frame" />
   </head></html>`);
 }
 
