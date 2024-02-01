@@ -7,17 +7,18 @@ const frameMetadata = getFrameMetadata({
       label: 'Claim NFT',
     },
   ],
-  image: 'https://frames.royal.io/waves.jpeg',
-  post_url: 'https://frames.royal.io/api/sonic',
+  // TODO: Replace URL with env var
+  image: ' https://tolerant-better-phoenix.ngrok-free.app/waves.jpeg',
+  post_url: ' https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
 });
 
 export const metadata: Metadata = {
-  title: 'Royal IRL - ETH Denver 2024',
-  description: 'Royal IRL - ETH Denver 2024',
+  title: 'Royal - Farcaster Frames',
+  description: 'Royal - Farcaster Frames',
   openGraph: {
-    title: 'Royal IRL - ETH Denver 2024',
-    description: 'Royal IRL - ETH Denver 2024',
-    images: ['https://frames.royal.io/waves.jpeg'],
+    title: 'Royal - Farcaster Frames',
+    description: 'Royal - Farcaster Frames',
+    images: [' https://tolerant-better-phoenix.ngrok-free.app/waves.jpeg'],
   },
   other: {
     ...frameMetadata,
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>Royal IRL - ETH Denver 2024</h1>
+      <h1>Royal - Farcaster Frames</h1>
     </>
   );
 }
