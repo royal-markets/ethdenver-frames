@@ -19,6 +19,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       throw new Error('Failed to validate frame');
     }
 
+    // TODO: Rip this out? (a16z advice)
     const is_follower = message.following;
     if (!is_follower) {
       return new NextResponse(
