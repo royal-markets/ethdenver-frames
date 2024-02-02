@@ -1,7 +1,5 @@
-import { FrameRequest, getFrameHtmlResponse } from '@coinbase/onchainkit';
+import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-
-import { validateFrameAction, ValidateFrameContext } from '../../../lib/utils/neynar';
 
 import MintABI from '../../../lib/ABIs/MintABI';
 import { getContract } from '../../../lib/utils/nftContract';
@@ -13,54 +11,60 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
 
   try {
-    const validateFrameContext = await validateFrameAction(body.trustedData.messageBytes);
-    // TODO: Turn into guard clause
-    if (validateFrameContext) {
-      validateFrameContext as ValidateFrameContext;
+    const { isValid, message } = await getFrameMessage(body, {
+      neynarApiKey: process.env.NEYNAR_API_KEY || '',
+    });
 
-      const is_follower = validateFrameContext.action.interactor.viewer_context.following;
-      if (!is_follower) {
-        return new NextResponse(
-          getFrameHtmlResponse({
-            buttons: [{ label: 'Must follow me to mint', action: 'post' }],
-            image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
-            post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
-          }),
-        );
-      }
-
-      accountAddress = validateFrameContext.action.interactor.verifications[0];
-      if (!accountAddress) {
-        return new NextResponse(
-          getFrameHtmlResponse({
-            buttons: [{ label: 'Need connected wallet to mint', action: 'post' }],
-            image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
-            post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
-          }),
-        );
-      }
-
-      // const nftContract = getContract(MintABI, NFT_CONTRACT_ADDRESS);
-      // const userBalance = await nftContract.read.balanceOf(accountAddress);
-      // if (userBalance > 0) {
-      //   return new NextResponse(
-      //     getFrameHtmlResponse({
-      //       buttons: [{ label: 'Already minted - Go to Sonic!', action: 'post_redirect' }],
-      //       image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
-      //       post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic_redirect',
-      //     }),
-      //   );
-      // }
-
-      // tokenId = await nftContract.write.mintTo(accountAddress as unknown as readonly [`0x${string}`]);
-      // return new NextResponse(
-      //   getFrameHtmlResponse({
-      //     buttons: [{ label: 'Minted - Go to Sonic!', action: 'post_redirect' }],
-      //     image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
-      //     post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic_redirect',
-      //   }),
-      // );
+    if (!isValid) {
+      throw new Error('Failed to validate frame');
     }
+
+    const is_follower = message.following;
+    if (!is_follower) {
+      return new NextResponse(
+        getFrameHtmlResponse({
+          buttons: [{ label: 'Must follow me to mint', action: 'post' }],
+          image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
+          post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
+        }),
+      );
+    }
+
+    accountAddress = message.interactor.verified_accounts[0];
+    if (!accountAddress) {
+      return new NextResponse(
+        getFrameHtmlResponse({
+          buttons: [{ label: 'Need connected wallet to mint', action: 'post' }],
+          image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
+          post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
+        }),
+      );
+    }
+
+    const nftContract = getContract(
+      process.env.SONIC_ACCESS_NFT_CONTRACT as `0x${string}`,
+      MintABI,
+    );
+
+    const userBalance = await nftContract.read.balanceOf([accountAddress as `0x${string}`]);
+    if (userBalance > 0) {
+      return new NextResponse(
+        getFrameHtmlResponse({
+          buttons: [{ label: 'Already minted - Go to Sonic!', action: 'post_redirect' }],
+          image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
+          post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic_redirect',
+        }),
+      );
+    }
+
+    tokenId = await nftContract.write.mintTo([accountAddress as `0x${string}`]);
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [{ label: 'Minted - Go to Sonic!', action: 'post_redirect' }],
+        image: 'https://tolerant-better-phoenix.ngrok-free.app/waves3.avif',
+        post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic_redirect',
+      }),
+    );
   } catch (err) {
     console.error(err);
 
@@ -72,14 +76,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }),
     );
   }
-
-  return new NextResponse(
-    getFrameHtmlResponse({
-      buttons: [{ label: 'We got to the end!', action: 'post' }],
-      image: 'https://tolerant-better-phoenix.ngrok-free.app/waves4.avif',
-      post_url: 'https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
-    }),
-  );
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
