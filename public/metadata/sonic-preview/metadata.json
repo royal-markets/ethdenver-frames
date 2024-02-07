@@ -1,0 +1,39 @@
+{
+  "attributes": [
+    { "trait_type": "artist", "value": "3LAU" },
+    { "trait_type": "artist_url", "value": "https://royal.io/3LAU" },
+    { "trait_type": "genre", "value": "EDM" },
+    { "trait_type": "model_provider", "value": "Soundful" },
+    { "trait_type": "model_id", "value": "018cd618-2ff0-73e8-b735-f11742d82b7b" },
+    { "trait_type": "model_name", "value": "3DM Generator" },
+    { "trait_type": "issuer", "value": "Royal" },
+    { "trait_type": "issuer_url", "value": "https://royal.io" }
+  ],
+  "name": "3DM Preview Token",
+  "description": "Introducing 3DM: The EDM AI music generator trained on an extensive library of over 1000 stems from renowned electronic artist, 3LAU. This advanced musical model has been meticulously crafted to understand harmony, rhythm, melody, and much more. It allows anyone to easily produce fresh tracks that are unique and authentic with just a few clicks.\n\nIf you own one of the 333 access tokens, burn your token to create a final version of your song and claim its rights.",
+  "image": "https://frames.royal.io/metadata/sonic-preview/3dm-preview-artwork.png",
+  "external_url": "https://royal.io/sonic",
+  "background_color": "",
+  "royal": {
+    "sonic": {
+      "genre": "EDM",
+      "issuer": { "name": "Royal", "url": "https://royal.io" },
+      "model": {
+        "artists": [
+          {
+            "avatar": "https://api.royal.io/assets/e03d96b4-3821-47e8-a6c8-5993beb61751",
+            "id": "44ebd39e-595a-4fc7-9bfd-7b5d4e604f6b",
+            "name": "3LAU",
+            "url": "https://royal.io/3LAU"
+          }
+        ],
+        "id": "018cd618-2ff0-73e8-b735-f11742d82b7b",
+        "name": "3DM Generator",
+        "provider": "Soundful",
+        "url": "https://royal.io/sonic/models/018cd618-2ff0-73e8-b735-f11742d82b7b"
+      },
+      "tags": [],
+      "token_type": "preview"
+    }
+  }
+}
