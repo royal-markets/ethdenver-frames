@@ -4,12 +4,14 @@ import type { Metadata } from 'next';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Claim NFT',
+      label: 'Learn More',
+      action: 'link',
+      target: 'https://sonic.royal.io/',
     },
+    { label: 'Claim NFT', action: 'post' },
   ],
-  // TODO: Replace URL with env var
-  image: ' https://tolerant-better-phoenix.ngrok-free.app/waves.jpeg',
-  post_url: ' https://tolerant-better-phoenix.ngrok-free.app/api/sonic',
+  image: `${process.env.BASE_URL}/sonic-preview/frame-01-sonic.gif`,
+  post_url: `${process.env.BASE_URL}/api/sonic-preview`,
 });
 
 export const metadata: Metadata = {
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Royal - Farcaster Frames',
     description: 'Royal - Farcaster Frames',
-    images: [' https://tolerant-better-phoenix.ngrok-free.app/waves.jpeg'],
+    images: [`${process.env.BASE_URL}/sonic-preview/frame-01-sonic.gif`],
   },
   other: {
     ...frameMetadata,
