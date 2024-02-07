@@ -5,25 +5,40 @@ import {
   createWalletClient,
   getContract as viemGetContract,
 } from 'viem';
-import { baseSepolia } from 'viem/chains';
+import { baseSepolia, base } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 
+// TODO: Make this dependent on an ENV VAR
+// - chainId
 const publicClient = createPublicClient({
-  chain: baseSepolia,
-  transport: http(process.env.ALCHEMY_URL),
+  chain: base,
+  transport: http(process.env.MAINNET_ALCHEMY_URL),
 });
 
-const account = privateKeyToAccount(
-  process.env.SONIC_ACCESS_AIRDROPPER_PRIVATE_KEY as `0x${string}`,
-);
+export function getContract<T extends Abi>(
+  address: `0x${string}`,
+  abi: T,
+  privateKey: `0x${string}`,
+) {
+  // TODO: Make privateKey an optional field
+  // If we don't have a private key, we can only use the public client
+  // if (!privateKey) {
+  //   return viemGetContract({
+  //     address,
+  //     abi,
+  //     client: publicClient,
+  //   });
+  // }
 
-const walletClient = createWalletClient({
-  account,
-  chain: baseSepolia,
-  transport: http(process.env.ALCHEMY_URL),
-});
+  // If we have a private key, we can use the wallet client
+  const account = privateKeyToAccount(privateKey);
+  const walletClient = createWalletClient({
+    account,
+    // TODO: Make this dependent on an ENV VAR
+    chain: base,
+    transport: http(process.env.MAINNET_ALCHEMY_URL),
+  });
 
-export function getContract<T extends Abi>(address: `0x${string}`, abi: T) {
   return viemGetContract({
     address,
     abi,
