@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@adraffy/ens-normalize/-/ens-normalize-1.10.0.tgz#d2a39395c587e092d77cbbc80acf956a54f38bf7"
   integrity sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==
 
-"@coinbase/onchainkit@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@coinbase/onchainkit/-/onchainkit-0.5.1.tgz#6ac3654b5d39f89c73f35b1ff01ff772c9530f9b"
-  integrity sha512-hAadKsVNT+QIGqS8ftDc3zb1pDk5ZOr8jI/XCFdQb8bjZTdbjAQHRI/WoAwJzkRtd9vo+8PWTSzb32eIgRtOng==
+"@coinbase/onchainkit@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@coinbase/onchainkit/-/onchainkit-0.5.3.tgz#1c05c7ce2d23db98d0fbf139d79fe53ea0a56f0a"
+  integrity sha512-V7TdgdjQG9AjGa2M5V4cCMu77eq3ObeaVcIUA4t/w+TP0YTrONYx3pnVWU/hQbANYNouFpdEvFOCs0mwgoRJrA==
 
 "@next/env@14.1.0":
   version "14.1.0"
@@ -108,10 +108,17 @@
   dependencies:
     tslib "^2.4.0"
 
-"@types/node@*", "@types/node@^20.11.13":
+"@types/node@*":
   version "20.11.16"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.16.tgz#4411f79411514eb8e2926f036c86c9f0e4ec6708"
   integrity sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==
+  dependencies:
+    undici-types "~5.26.4"
+
+"@types/node@^20.11.17":
+  version "20.11.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.17.tgz#cdd642d0e62ef3a861f88ddbc2b61e32578a9292"
+  integrity sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==
   dependencies:
     undici-types "~5.26.4"
 

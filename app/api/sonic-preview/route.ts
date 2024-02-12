@@ -20,6 +20,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
 
     // Check if the user is a follower
+    //
     // TODO: Might be good to check if the user is a follower of Royal's specific account
     // rather than the generic "following" flag.
     const is_follower = message.following;
